@@ -1,7 +1,4 @@
 import App, { Container } from 'next/app'
-import { ApolloProvider } from 'react-apollo'
-
-import withApollo from '@src/lib/withApollo'
 import Page from '@src/components/Page'
 
 class WorldsScoreboardApp extends App<WorldsScoreboardAppProps> {
@@ -17,21 +14,19 @@ class WorldsScoreboardApp extends App<WorldsScoreboardAppProps> {
   }
 
   render() {
-    const { Component, pageProps, apolloClient } = this.props
+    const { Component, pageProps } = this.props
 
     return (
       <Container>
-        <ApolloProvider client={ apolloClient }>
-          <Page>
-            <Component { ...pageProps } />
-          </Page>
-        </ApolloProvider>
+        <Page>
+          <Component { ...pageProps } />
+        </Page>
       </Container>
     )
   }
 }
 
-export default withApollo(WorldsScoreboardApp)
+export default WorldsScoreboardApp
 
 interface WorldsScoreboardAppProps {
   Component: JSX.Element
