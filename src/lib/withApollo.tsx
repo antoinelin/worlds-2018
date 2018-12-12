@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import initApollo from '@src/lib/initApollo'
 import Head from 'next/head'
 import { getDataFromTree } from 'react-apollo'

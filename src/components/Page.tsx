@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import NProgress from 'nprogress'
 import Router from 'next/router'
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
+
 import Meta from '@components/Meta'
+import { FlexColumnAlignLeft } from '@components/styles/FlexMixins'
 
 NProgress.configure({ showSpinner: false })
 
@@ -24,9 +26,11 @@ const theme = {
   violet: '#9013FE',
   darkGrey: '#292B2F',
   mediumGrey: '#525252',
-  gridWidth: '800px',
-  gridColumnWidth: '180px',
+  gridWidth: '1000px',
+  gridColumnWidth: '230px',
+  gridColumnWidthNumber: 230,
   gridGutterWidth: '20px',
+  gridGutterWidthNumber: 20,
 }
 
 const GlobalStyle = createGlobalStyle`
@@ -55,7 +59,7 @@ const GlobalStyle = createGlobalStyle`
 
   h1 {
     font-family: 'Futura-CondensedMedium', sans-serif;
-    font-size: 4rem;
+    font-size: 4.8rem;
     letter-spacing: 0;
     line-height: 1.2;
     text-transform: uppercase;
@@ -104,16 +108,28 @@ const GlobalStyle = createGlobalStyle`
   a {
     font-family: 'Futura-CondensedMedium', sans-serif;
     color: ${ theme.white };
-    font-size: 1.8rem;
+    font-size: 2.4rem;
     letter-spacing: 0;
     line-height: 1;
     text-transform: uppercase;
     text-decoration: none;
     text-align: left;
+    transition: 200ms ease-out;
+  }
+
+  button {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
   }
 `
 
 const StylePage = styled.div`
+  ${ FlexColumnAlignLeft }
   width: 100vw;
   margin: 10rem 0;
   color: ${props => props.theme.white};

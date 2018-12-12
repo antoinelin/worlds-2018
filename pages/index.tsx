@@ -1,30 +1,76 @@
 import * as React from 'react'
-import Link from 'next/link'
-import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
+import styled from 'styled-components'
+import Link from 'next/link'
 
-const query = gql`
-  query luke {
-    champion @rest(type: "Champion", path: "lol/champions/1") {
+import Tabs from '@components/Tabs'
+import Header from '@src/components/Header'
+
+const StyledHomepage = styled.section`
+  width: 100%;
+`
+
+const GET_PLAY_IN_GROUPS_TOURNAMENTS = gql`
+  query GET_PLAY_IN_GROUPS_TOURNAMENTS {
+    tournaments @rest(type: "Tournaments", path: "series/1605/tournaments?filter[id]=1674,1669,1678,1675") {
+      id @export(as: "id")
       name
+      matches @rest(type: "Matches", path: "tournaments/{exportVariables.id}/matches/") {
+        id
+        opponents
+      }
     }
   }
 `
 
-const Home = () => (
-  <Query query={ query }>
-    {({ data }) => {
-      console.log(data)
-      return (
-        <React.Fragment>
-          <h1>Worlds 2018 scoreboard</h1>
-          <p><Link href="/about"><a>About</a></Link></p>
-          <p>This is a paragraph text</p>
-          <small>This is a small text</small>
-        </React.Fragment>
-      )
-    }}
-  </Query>
+const GET_PLAY_IN_ELIMINATION_TOURNAMENTS = gql`
+  query GET_PLAY_IN_ELIMINATION_TOURNAMENTS {
+    tournaments @rest(type: "Tournaments", path: "tournaments/1671") {
+      id
+      name
+      matches @rest(type: "Matches", path: "tournaments/1671/matches/") {
+        id
+        opponents
+      }
+    }
+  }
+`
+
+const GET_GROUP_STAGE_TOURNAMENTS = gql`
+  query GET_GROUP_STAGE_TOURNAMENTS {
+    tournaments @rest(type: "Tournaments", path: "series/1605/tournaments?filter[id]=1670,1672,1676,1673") {
+      id @export(as: "id")
+      name
+      matches @rest(type: "Matches", path: "tournaments/{exportVariables.id}/matches/") {
+        id
+        opponents
+      }
+    }
+  }
+`
+
+const GET_FINALS_TOURNAMENTS = gql`
+  query GET_FINALS_TOURNAMENTS {
+    tournaments @rest(type: "Tournaments", path: "tournaments/1677") {
+      id
+      name
+      matches @rest(type: "Matches", path: "tournaments/1677/matches/") {
+        id
+        opponents
+      }
+    }
+  }
+`
+
+const Home: React.SFC<HomeProps> = () => (
+  <React.Fragment>
+    <StyledHomepage>
+      <Link href="/stage/finals"><a>Finals</a></Link>
+      <img src="/static/worlds-logo.png" alt="Worlds Logotype"/>
+    </StyledHomepage>
+  </React.Fragment>
 )
 
 export default Home
+
+interface HomeProps {}

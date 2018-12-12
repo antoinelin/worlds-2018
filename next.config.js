@@ -21,3 +21,14 @@ module.exports = withTypescript({
     return config
   }
 })
+
+// Dev using Docker
+// module.exports = withTypescript({
+//   webpackDevMiddleware: (config) => {
+//     config.watchOptions = {
+//       aggregateTimeout: 100,
+//       poll: 500,
+//     };
+//     return config;
+//   }
+// })

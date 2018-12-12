@@ -12,6 +12,9 @@
         "pages/*"
       ],
     },
+    "plugins": [{
+      "name": "typescript-styled-plugin"
+    }],
     "target": "esnext",
     "module": "esnext",
     "jsx": "preserve",

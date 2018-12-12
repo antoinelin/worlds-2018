@@ -1,0 +1,35 @@
+version: '3.7'
+
+volumes:
+  caddy_log:
+    driver: local
+
+services:
+  web-server:
+    image: mhart/alpine-node:11.4.0
+    container_name: node
+    ports:
+      - 127.0.0.1:3000:3000
+    volumes:
+      - "${APP}:/usr/src/app:rw"
+    environment:
+      PANDASCORE_API_TOKEN: ${PANDASCORE_API_TOKEN}
+    restart: unless-stopped
+    entrypoint: /usr/src/app/dev.sh
+
+  proxy-dev:
+    image: abiosoft/caddy
+    container_name: caddy-dev
+    ports:
+      - 127.0.0.1:80:80
+      - 127.0.0.1:443:443
+    volumes:
+      - "${APP}:/usr/src/app:rw"
+      - "./caddy/Caddyfile-dev:/etc/Caddyfile:rw"
+      - "./caddy/.caddy:/root/.caddy:rw"
+      - "./caddy/ssl/worlds.dev.crt:/etc/caddy/ssl/worlds.dev.crt:ro"
+      - "./caddy/ssl/worlds.dev.key:/etc/caddy/ssl/worlds.dev.key:ro"
+      - "caddy_log:/var/log/caddy:rw"
+    depends_on:
+      - web-server
+    restart: unless-stopped
