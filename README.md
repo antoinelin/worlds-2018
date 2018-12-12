@@ -10,6 +10,8 @@ Clone the repository:
 git clone https://github.com/toinelin/worlds-2018.git
 ```
 
+Add you PANDASCORE token on .env file
+
 Install it and run:
 
 ```bash
