@@ -55,6 +55,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     background: ${ theme.black };
+    overflow-x: hidden;
   }
 
   h1 {
@@ -78,7 +79,7 @@ const GlobalStyle = createGlobalStyle`
 
   h3 {
     font-family: 'Futura-CondensedMedium', sans-serif;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     letter-spacing: 0;
     line-height: 1;
     text-transform: uppercase;
@@ -125,6 +126,26 @@ const GlobalStyle = createGlobalStyle`
     font: inherit;
     cursor: pointer;
     outline: inherit;
+  }
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: ${ theme.darkGrey };
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: ${ theme.mediumGrey };
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: ${ theme.white };
   }
 `
 

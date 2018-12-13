@@ -1,73 +1,101 @@
 import * as React from 'react'
-// import gql from 'graphql-tag'
 import styled from 'styled-components'
-import Link from 'next/link'
+import anime from 'animejs'
+import { withRouter } from 'next/router'
+
+import { FlexColumnCentered } from '@components/styles/FlexMixins'
+import { ButtonMixin } from '@components/styles/ButtonStyle'
 
 const StyledHomepage = styled.section`
-  width: 100%;
+  ${ FlexColumnCentered }
+  height: calc(100vh - 30rem);
 `
 
-// const GET_PLAY_IN_GROUPS_TOURNAMENTS = gql`
-//   query GET_PLAY_IN_GROUPS_TOURNAMENTS {
-//     tournaments @rest(type: "Tournaments", path: "series/1605/tournaments?filter[id]=1674,1669,1678,1675") {
-//       id @export(as: "id")
-//       name
-//       matches @rest(type: "Matches", path: "tournaments/{exportVariables.id}/matches/") {
-//         id
-//         opponents
-//       }
-//     }
-//   }
-// `
+const Logo = styled.img`
+  opacity: 0;
+  width: auto;
+  height: 30vh;
+  transform: translateY(80px);
+`
 
-// const GET_PLAY_IN_ELIMINATION_TOURNAMENTS = gql`
-//   query GET_PLAY_IN_ELIMINATION_TOURNAMENTS {
-//     tournaments @rest(type: "Tournaments", path: "tournaments/1671") {
-//       id
-//       name
-//       matches @rest(type: "Matches", path: "tournaments/1671/matches/") {
-//         id
-//         opponents
-//       }
-//     }
-//   }
-// `
+const StyledLink = styled.a`
+  ${ ButtonMixin }
+  font-size: 2rem;
+  opacity: 0;
+`
 
-// const GET_GROUP_STAGE_TOURNAMENTS = gql`
-//   query GET_GROUP_STAGE_TOURNAMENTS {
-//     tournaments @rest(type: "Tournaments", path: "series/1605/tournaments?filter[id]=1670,1672,1676,1673") {
-//       id @export(as: "id")
-//       name
-//       matches @rest(type: "Matches", path: "tournaments/{exportVariables.id}/matches/") {
-//         id
-//         opponents
-//       }
-//     }
-//   }
-// `
+const Title = styled.h1`
+  opacity: 0;
+`
 
-// const GET_FINALS_TOURNAMENTS = gql`
-//   query GET_FINALS_TOURNAMENTS {
-//     tournaments @rest(type: "Tournaments", path: "tournaments/1677") {
-//       id
-//       name
-//       matches @rest(type: "Matches", path: "tournaments/1677/matches/") {
-//         id
-//         opponents
-//       }
-//     }
-//   }
-// `
+class Home extends React.Component<HomeProps, HomeStates> {
+  state = { isMounted: false }
 
-const Home: React.SFC<HomeProps> = () => (
-  <React.Fragment>
-    <StyledHomepage>
-      <Link href="/stage/finals"><a>Finals</a></Link>
-      <img src="/static/worlds-logo.png" alt="Worlds Logotype"/>
-    </StyledHomepage>
-  </React.Fragment>
-)
+  public componentDidMount = () => {
+    this.setState({ isMounted: true }, () => this.show() )
+  }
 
-export default Home
+  public show = () => {
+    const timeline = anime.timeline()
+    timeline
+      .add({
+        targets: '#worlds-logo',
+        delay: 500,
+        duration: 600,
+        easing: 'easeInOutQuart',
+        opacity: 1,
+      })
+      .add({
+        targets: '#worlds-logo',
+        duration: 600,
+        easing: 'easeInOutQuart',
+        translateY: [80, 0],
+      })
+      .add({
+        targets: '.staggeredItem',
+        duration: 600,
+        delay: (element, index) =>  index * 100,
+        easing: 'easeInOutQuart',
+        opacity: 1,
+      })
+  }
 
-interface HomeProps {}
+  public hide = () => {
+    const timeline = anime.timeline({
+      complete: () => this.props.router.push('/stage/play-in-groups'),
+    })
+
+    timeline
+      .add({
+        targets: '#worlds-logo, .staggeredItem',
+        duration: 600,
+        delay: (element, i) =>  i * 100,
+        easing: 'easeInOutQuart',
+        opacity: 0,
+      })
+  }
+
+  public render() {
+    return (
+      <React.Fragment>
+        <StyledHomepage>
+          <Logo id="worlds-logo" className="Styled__Homepage-logo" src="/static/worlds-logo.png" alt="Worlds Logotype"/>
+          <Title className="staggeredItem">Worlds 2018 scoreboard</Title>
+          <StyledLink className="staggeredItem" onClick={ () => this.hide() }>
+            Discover
+          </StyledLink>
+        </StyledHomepage>
+      </React.Fragment>
+    )
+  }
+}
+
+export default withRouter(Home)
+
+interface HomeProps {
+  router: any
+}
+
+interface HomeStates {
+  isMounted: boolean
+}

@@ -23,7 +23,7 @@ function createClient(initialState?: any) {
     return {
       headers: {
         ...headers,
-        Authorization: token ? `Bearer ${token}` : '',
+        Authorization: token ? token : '',
       },
     }
   })
@@ -42,7 +42,7 @@ function createClient(initialState?: any) {
   })
 
   const restLink = new RestLink({
-    uri: 'https://api.pandascore.co/',
+    uri: 'http://localhost:3000/api/',
     credentials: 'same-origin',
     headers: {
       'Access-Control-Allow-Origin': '*',

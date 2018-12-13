@@ -2,11 +2,20 @@ import * as React from 'react'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
+import { withRouter } from 'next/router'
+import anime from 'animejs'
 
+import OrbitSpinner from '@components/OrbitSpinner'
 import Header from '@src/components/Header'
+import Table from '@src/components/Table'
 
 const StyledStagePage = styled.section`
   width: 100%;
+
+  .StagePage__Table-wrapper {
+    opacity: 0;
+    transform: translateY(50px);
+  }
 `
 
 const stages = [
@@ -48,42 +57,100 @@ const stages = [
 
 const GET_TOURNAMENTS = gql`
   query GET_TOURNAMENTS($ids: String) {
-    tournaments(ids: $ids) @rest(type: "Tournaments", path: "series/1605/tournaments?filter[id]={args.ids}") {
+    tournaments(ids: $ids) @rest(type: "Tournaments", path: "tournaments?ids={args.ids}") {
       id @export(as: "id")
       name
-      matches @rest(type: "Matches", path: "tournaments/{exportVariables.id}/matches/") {
+      matches @rest(type: "Matches", path: "matches?tournamentId={exportVariables.id}") {
         id
         opponents
       }
     }
   }
 `
+class StagePage extends React.Component<StagePageProps, StagePageStates> {
+  public changeRoute(event:any, href: string, as: string) {
+    event.preventDefault()
 
-const StagePage: React.SFC<StagePageProps> = ({ query }) => {
-  const currentStage = stages.find(stage => stage.slug === query.slug)
+    this.hide(() => {
+      this.props.router.push(as)
+    })
+  }
 
-  return (
-    <Query
-      query={ GET_TOURNAMENTS }
-      variables={{ ids: currentStage.tournaments_ids.join(',') }}
-    >
-      {({ data, error, loading }) => {
-        // console.log(data)
-        return (
-          <React.Fragment>
-            <Header queryId={ currentStage.id }/>
-            <StyledStagePage>
-              <h2>{ data.tournaments[0].name }</h2>
-            </StyledStagePage>
-          </React.Fragment>
-        )
-      }}
-    </Query>
-  )
+  public show(id: number, index: number) {
+    anime({
+      targets: `#table-${ id }`,
+      duration: 500,
+      delay: 200 + index * 300,
+      easing: 'easeInOutQuart',
+      opacity: [0, 1],
+      translateY: [50, 0],
+    })
+  }
+
+  public hide(callback: any) {
+    const timeline = anime.timeline({
+      complete: () => callback(),
+    })
+
+    timeline.add({
+      targets: '.StagePage__Table-wrapper',
+      duration: 200,
+      delay: (element, index) => index * 200,
+      easing: 'easeInOutQuart',
+      opacity: [1, 0],
+      translateY: [0, 50],
+    })
+  }
+
+  public render() {
+    const { props: { query } } = this
+    const currentStage = stages.find(stage => stage.slug === query.slug)
+
+    return (
+      <React.Fragment>
+        <Header
+          push={ (event, href, as) => this.changeRoute(event, href, as) }
+          queryId={ currentStage.id }
+        />
+        <StyledStagePage>
+          <Query
+            query={ GET_TOURNAMENTS }
+            variables={{ ids: currentStage.tournaments_ids.join(',') }}
+          >
+            {({ data, error, loading }) => {
+              if (loading) {
+                return <OrbitSpinner color="#9013FE" />
+              }
+
+              if (error) {
+                return <p>Error: { error.message }</p>
+              }
+
+              return data.tournaments.map((tournament, index) => (
+                <div className="StagePage__Table-wrapper" id={ `table-${ tournament.id }` }>
+                  <Table
+                    index={ index }
+                    key={ tournament.id }
+                    data={ tournament }
+                    onMount={ () => this.show(tournament.id, index) }
+                  />
+                </div>
+              ))
+            }}
+          </Query>
+        </StyledStagePage>
+      </React.Fragment>
+    )
+  }
 }
 
-export default StagePage
+export default withRouter(StagePage)
 
 interface StagePageProps {
   query: any
+  router: any
+}
+
+interface StagePageStates {
+  isComponentMounted: boolean
 }

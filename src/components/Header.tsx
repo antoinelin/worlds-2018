@@ -1,11 +1,11 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import Link from 'next/link'
 
 import { FlexInline } from '@components/styles/FlexMixins'
 
 const StyledHeader = styled.header`
   width: 100%;
+  margin-bottom: 4rem;
 `
 
 const Nav = styled.nav`
@@ -20,16 +20,26 @@ const Nav = styled.nav`
 `
 
 const NavLink = styled('li')<{ isActive: boolean }>`
-  ${ FlexInline };
-  width: ${props => props.theme.gridColumnWidth};
-  margin-right: ${props => props.theme.gridGutterWidth};
+  ${ FlexInline }
+  width: ${ props => props.theme.gridColumnWidth };
+  margin-right: ${ props => props.theme.gridGutterWidth };
 
   &:last-of-type {
     margin-right: 0;
   }
 
+  .Nav__Link-icon {
+    width: 2rem;
+    height: 2.5rem;
+    margin-right: 1rem;
+  }
+
   .Nav__Link-link {
-    color: ${props => props.isActive ? props.theme.white : props.theme.mediumGrey};
+    color: ${ props => props.isActive ? props.theme.white : props.theme.mediumGrey };
+
+    &:hover {
+      color: ${ props => props.theme.white };
+    }
   }
 `
 
@@ -41,7 +51,7 @@ const NavSlider = styled('nav')<{ index: number }>`
     width: ${ props => props.theme.gridColumnWidth };
     height: 0.2rem;
     background: ${ props => props.theme.violet };
-    transform: translateX(${props => props.index
+    transform: translateX(${ props => props.index
       ? props.index * (props.theme.gridColumnWidthNumber + props.theme.gridGutterWidthNumber)
       : 0 }px);
     transition: 200ms ease-out;
@@ -81,31 +91,67 @@ const NavLinks = [
   },
 ]
 
-const Header: React.SFC<HeaderProps> = ({ queryId }) => (
-  <StyledHeader>
-    <h1>Worlds 2018 scoreboard!!!</h1>
-    <Nav>
-      <ul className="Nav__Link-links">
-        {
-          NavLinks.map(link => (
-            <NavLink key={ link.id } isActive={ queryId === link.id }>
-              <Link href={ link.href } as={ link.as }>
-                <a className="Nav__Link-link">{ link.label }</a>
-              </Link>
-            </NavLink>
-          ))
-        }
-      </ul>
-    </Nav>
-    <NavSlider index={ queryId }>
-      <div className="Nav__Slider-slider" />
-      <div className="Nav__Slider-background" />
-    </NavSlider>
-  </StyledHeader>
-)
+class Header extends React.Component<HeaderProps, HeaderState> {
+  state = {
+    id: this.props.queryId,
+  }
+
+  public onNavLinkClick= (id: number, event: any, ...args: string[]) => {
+    this.setState({ id }, () => this.props.push(event, ...args))
+  }
+
+  public render() {
+    const { id } = this.state
+
+    return (
+      <StyledHeader>
+        <h1>Worlds 2018 scoreboard</h1>
+        <Nav>
+          <ul className="Nav__Link-links">
+            {
+              NavLinks.map(link => {
+                let icon: JSX.Element
+
+                if (id === link.id) {
+                  icon = (
+                    <img
+                      className="Nav__Link-icon"
+                      src="/static/worlds-icon.svg"
+                      alt="League of Legends Worlds icon"
+                    />
+                  )
+                }
+
+                return (
+                  <NavLink key={ link.id } isActive={ id === link.id }>
+                    { icon }
+                    <a
+                      href={ link.href }
+                      className="Nav__Link-link"
+                      onClick={ (event) => this.onNavLinkClick(link.id, event, link.href, link.as) }
+                    >
+                      { link.label }
+                    </a>
+                  </NavLink>
+                )
+              })
+            }
+          </ul>
+        </Nav>
+        <NavSlider index={ id }>
+          <div className="Nav__Slider-slider" />
+          <div className="Nav__Slider-background" />
+        </NavSlider>
+      </StyledHeader>
+    )
+  }
+}
 
 export default Header
 
 interface HeaderProps {
   queryId: number
+  push: any
 }
+
+interface HeaderState {}
