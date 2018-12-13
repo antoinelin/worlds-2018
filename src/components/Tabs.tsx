@@ -12,6 +12,7 @@ const TabList = styled.ul`
   width: 100%;
   padding: 0;
   list-style: none;
+  display: inline-flex;
 `
 
 const TabsDivider = styled('div')<{ index: number }>`
@@ -19,19 +20,17 @@ const TabsDivider = styled('div')<{ index: number }>`
   margin: 2rem 0;
 
   .Tabs__Divider-slider {
-    width: ${ props => props.theme.gridColumnWidth };
+    width: 230px;
     height: 0.2rem;
-    background: ${ props => props.theme.violet };
-    transform: translateX(${props => props.index
-      ? props.index * (props.theme.gridColumnWidthNumber + props.theme.gridGutterWidthNumber)
-      : 0 }px);
+    background: #9013FE;
+    transform: translateX(${props => props.index ? props.index * 250 : 0 }px);
     transition: 200ms ease-out;
   }
 
   .Tabs__Divider-background {
     width: 100%;
     height: 0.1rem;
-    background: ${ props => props.theme.darkGrey }
+    background: #292B2F;
   }
 `
 
@@ -42,20 +41,36 @@ const TabContent = styled.div`
 class Tabs extends React.Component<TabsProps, TabsStates> {
   static displayName = 'Tabs'
 
-  state = {
-    activeTab: this.props.children[0].props['data-label'],
-    activeTabIndex: 0,
+  constructor(props: TabsProps) {
+    super(props)
+
+    this.state = {
+      activeTabSlug: this.props.activeTabSlug ? this.props.activeTabSlug : this.props.children[0].props['data-slug'],
+      activeTabIndex: this.props.activeTabIndex ? this.props.activeTabIndex : 0,
+    }
+
+    this.onTabClick = this.onTabClick.bind(this)
   }
 
-  public onTabClick = (tab, tabIndex) => {
+  public async onTabClick(tabIndex: number, tabSlug: string) {
+    if (typeof this.props.onTabClick !== undefined) {
+      this.setState({
+        activeTabIndex: tabIndex,
+      })
+
+      await this.props.onTabClick(tabSlug)
+
+      return this.setState({ activeTabSlug: tabSlug })
+    }
+
     return this.setState({
-      activeTab: tab,
       activeTabIndex: tabIndex,
+      activeTabSlug: tabSlug,
     })
   }
 
   public render() {
-    const { onTabClick, props: { children }, state: { activeTab, activeTabIndex } } = this
+    const { onTabClick, props: { children }, state: { activeTabIndex, activeTabSlug } } = this
 
     return (
       <StyleTabs>
@@ -65,23 +80,24 @@ class Tabs extends React.Component<TabsProps, TabsStates> {
               return (
                 <Tab
                   key={ index }
-                  activeTab={ activeTab }
-                  activeTabIndex={ index }
+                  activeTab={ activeTabIndex }
+                  index={ index }
                   label={ child.props['data-label'] }
+                  slug={ child.props['data-slug'] }
                   onClick={ onTabClick }
                 />
               )
             })
           }
         </TabList>
-        <TabsDivider index={ activeTabIndex }>
+        <TabsDivider className="Tabs__Divider" index={ activeTabIndex }>
           <div className="Tabs__Divider-slider" />
           <div className="Tabs__Divider-background" />
         </TabsDivider>
         <TabContent>
           {
             children.map(child => {
-              return child.props['data-label'] === activeTab
+              return child.props['data-slug'] === activeTabSlug
                 ? child.props.children
                 : false
             })
@@ -96,6 +112,12 @@ export default Tabs
 
 interface TabsProps {
   children: JSX.Element[]
+  onTabClick?: any
+  activeTabSlug?: string
+  activeTabIndex?: number
 }
 
-interface TabsStates {}
+interface TabsStates {
+  activeTabIndex: number
+  activeTabSlug: string
+}

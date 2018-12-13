@@ -4,8 +4,8 @@ import * as React from 'react'
 import styled from 'styled-components'
 
 const Orbit = styled('div')<{ size: number; animationDuration: number }>`
-  height: ${props => props.size}px;
-  width: ${props => props.size}px;
+  height: ${ props => props.size }px;
+  width: ${ props => props.size }px;
   border-radius: 50%;
   perspective: 800px;
   margin: 5rem auto;
@@ -26,15 +26,15 @@ const Orbit = styled('div')<{ size: number; animationDuration: number }>`
     left: 0%;
     top: 0%;
     animation: orbit-spinner-orbit-one-animation
-      ${props => props.animationDuration}ms linear infinite;
-    border-bottom: 3px solid ${props => props.color};
+      ${ props => props.animationDuration }ms linear infinite;
+    border-bottom: 3px solid ${ props => props.color };
   }
 
   .orbit:nth-child(2) {
     right: 0%;
     top: 0%;
     animation: orbit-spinner-orbit-two-animation
-      ${props => props.animationDuration}ms linear infinite;
+      ${ props => props.animationDuration }ms linear infinite;
     border-right: 3px solid ${props => props.color};
   }
 
@@ -42,8 +42,8 @@ const Orbit = styled('div')<{ size: number; animationDuration: number }>`
     right: 0%;
     bottom: 0%;
     animation: orbit-spinner-orbit-three-animation
-      ${props => props.animationDuration}ms linear infinite;
-    border-top: 3px solid ${props => props.color};
+      ${ props => props.animationDuration }ms linear infinite;
+    border-top: 3px solid ${ props => props.color };
   }
 
   @keyframes orbit-spinner-orbit-one-animation {
@@ -80,11 +80,11 @@ const OrbitSpinner: React.SFC<OrbitProps> = props => {
   return (
     <Orbit
       size={ size ? size : 50 }
-      color={color ? color : '#fff' }
-      animationDuration={animationDuration ? animationDuration : 1000}
-      className={`orbit-spinner${className ? ' ' + className : ''}`}
-      style={style}
-      {...props}
+      color={ color ? color : '#fff' }
+      animationDuration={ animationDuration ? animationDuration : 1000 }
+      className={ `orbit-spinner${ className ? ' ' + className : '' }` }
+      style={ style }
+      { ...props }
     >
       <div className="orbit one" />
       <div className="orbit two" />

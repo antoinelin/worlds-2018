@@ -1,91 +1,204 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import anime from 'animejs'
 import { withRouter } from 'next/router'
+import { Query } from 'react-apollo'
+import gql from 'graphql-tag'
+import anime from 'animejs'
 
-import { FlexColumnCentered } from '@components/styles/FlexMixins'
-import { ButtonMixin } from '@components/styles/ButtonStyle'
+import Tabs from '@components/Tabs'
+import Tournament from '@src/components/Tournament'
+import OrbitSpinner from '@components/OrbitSpinner'
 
 const StyledHomepage = styled.section`
-  ${ FlexColumnCentered }
-  height: calc(100vh - 30rem);
+  width: 100%;
+
+  .Homepage__Tournaments-wrapper {
+    opacity: 0;
+  }
+
+  .tab {
+    opacity: 0
+  }
+
+  .Tabs__Divider {
+    transform-origin: left;
+    transform: scaleX(0);
+  }
 `
 
-const Logo = styled.img`
-  opacity: 0;
-  width: auto;
-  height: 30vh;
-  transform: translateY(80px);
-`
-
-const StyledLink = styled.a`
-  ${ ButtonMixin }
-  font-size: 2rem;
+const StyledTitle = styled.h1`
   opacity: 0;
 `
 
-const Title = styled.h1`
-  opacity: 0;
+const stages = [
+  {
+    id: 0,
+    label: 'Play-in groups',
+    slug: 'play-in-groups',
+    tournaments_ids: [
+      1674,
+      1669,
+      1678,
+      1675,
+    ],
+  },
+  {
+    id: 1,
+    label: 'Play-in elimination',
+    slug: 'play-in-elimination',
+    tournaments_ids: [
+      1671,
+    ],
+  },
+  {
+    id: 2,
+    label: 'Group stage',
+    slug: 'group-stage',
+    tournaments_ids: [
+      1670,
+      1672,
+      1676,
+      1673,
+    ],
+  },
+  {
+    id: 3,
+    label: 'Finals',
+    slug: 'finals',
+    tournaments_ids: [
+      1677,
+    ],
+  },
+]
+
+const GET_TOURNAMENTS = gql`
+  query GET_TOURNAMENTS($ids: String) {
+    tournaments(ids: $ids) @rest(type: "Tournaments", path: "tournaments?ids={args.ids}") {
+      id @export(as: "id")
+      name
+      matches @rest(type: "Matches", path: "matches?tournamentId={exportVariables.id}") {
+        id
+        opponents
+        winner_id
+        results
+      }
+    }
+  }
 `
 
 class Home extends React.Component<HomeProps, HomeStates> {
-  state = { isMounted: false }
-
   public componentDidMount = () => {
-    this.setState({ isMounted: true }, () => this.show() )
-  }
+    if (!this.props.router.query.slug) {
+      this.props.router.push(`/?slug=${ stages[0].slug }`, `/stage/${ stages[0].slug  }`, { shallow: true })
+    }
 
-  public show = () => {
     const timeline = anime.timeline()
     timeline
       .add({
-        targets: '#worlds-logo',
-        delay: 500,
-        duration: 600,
+        targets: '#Homepage__Title',
+        duration: 300,
+        delay: 200,
         easing: 'easeInOutQuart',
-        opacity: 1,
+        opacity: [0, 1],
+        translateX: [-10, 0],
       })
       .add({
-        targets: '#worlds-logo',
-        duration: 600,
+        targets: '.tab',
+        duration: 300,
+        delay: (element, index) => index * 100,
         easing: 'easeInOutQuart',
-        translateY: [80, 0],
+        opacity: [0, 1],
+        translateX: [-10, 0],
       })
       .add({
-        targets: '.staggeredItem',
-        duration: 600,
-        delay: (element, index) =>  index * 100,
+        targets: '.Tabs__Divider',
+        duration: 300,
+        offset: '-=300',
         easing: 'easeInOutQuart',
-        opacity: 1,
+        scaleX: [0, 1],
       })
   }
 
-  public hide = () => {
-    const timeline = anime.timeline({
-      complete: () => this.props.router.push('/stage/play-in-groups'),
+  public displayTournament = (id: number, index: number) => {
+    return anime({
+      targets: `#table-${ id }`,
+      duration: 500,
+      delay: index * 200,
+      easing: 'easeInOutQuart',
+      opacity: [0, 1],
+      translateX: [-10, 0],
     })
+  }
 
-    timeline
-      .add({
-        targets: '#worlds-logo, .staggeredItem',
-        duration: 600,
-        delay: (element, i) =>  i * 100,
-        easing: 'easeInOutQuart',
-        opacity: 0,
+  public onTabClick = (slug: string) => {
+    return new Promise(resolve => {
+      this.props.router.push(`/?slug=${ slug }`, `/stage/${ slug }`, { shallow: true })
+
+      const timeline = anime.timeline({
+        complete: () => resolve(),
       })
+      timeline
+        .add({
+          targets: '.Homepage__Tournaments-wrapper',
+          duration: 500,
+          delay:(element, index) => index * 200,
+          easing: 'easeInOutQuart',
+          opacity: [1, 0],
+          translateX: [0, 10],
+        })
+    })
   }
 
   public render() {
+    const { props: { router } } = this
     return (
-      <React.Fragment>
-        <StyledHomepage>
-          <Logo id="worlds-logo" className="Styled__Homepage-logo" src="/static/worlds-logo.png" alt="Worlds Logotype"/>
-          <Title className="staggeredItem">Worlds 2018 scoreboard</Title>
-          <StyledLink className="staggeredItem" onClick={ () => this.hide() }>
-            Discover
-          </StyledLink>
-        </StyledHomepage>
-      </React.Fragment>
+      <StyledHomepage>
+        <StyledTitle id="Homepage__Title">Worlds 2018 scoreboard</StyledTitle>
+        <Tabs
+          activeTabIndex={ router.query.slug ? stages.find(stage => stage.slug === router.query.slug ).id : undefined }
+          activeTabSlug={ router.query.slug ? router.query.slug : undefined }
+          onTabClick={ (slug: string) => this.onTabClick(slug) }
+        >
+          {
+            stages.map(stage => (
+              <div
+                key={ stage.id }
+                data-label={ stage.label }
+                data-slug={ stage.slug }
+              >
+                <Query
+                  query={ GET_TOURNAMENTS }
+                  variables={{ ids: stage.tournaments_ids.join(',') }}
+                >
+                  {({ data, error, loading }) => {
+                    if (loading) {
+                      return <OrbitSpinner color="#9013FE" />
+                    }
+
+                    if (error) {
+                      return <p>Error: { error.message }</p>
+                    }
+
+                    return data.tournaments.map((tournament, index) => (
+                      <div
+                        key={ tournament.id }
+                        className="Homepage__Tournaments-wrapper"
+                        id={ `table-${ tournament.id }` }
+                      >
+                        <Tournament
+                          index={ index }
+                          data={ tournament }
+                          onMount={ () => this.displayTournament(tournament.id, index) }
+                        />
+                      </div>
+                    ))
+                  }}
+                </Query>
+              </div>
+            ))
+          }
+        </Tabs>
+      </StyledHomepage>
     )
   }
 }
@@ -96,6 +209,4 @@ interface HomeProps {
   router: any
 }
 
-interface HomeStates {
-  isMounted: boolean
-}
+interface HomeStates {}

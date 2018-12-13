@@ -1,5 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
+import { darken } from 'polished'
+import Link from 'next/link'
 
 const StyledTable = styled.table`
   width: 100%;
@@ -56,6 +58,29 @@ const Opponent = styled('td')<{ variant: string }>`
     justify-content: center;
     align-items: flex-start;
   }
+
+  .Table__DetailsButton-wrapper {
+    margin: 0 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Table__DetailsButton-link {
+    font-family: 'Futura-CondensedMedium', sans-serif;
+    color: #D1D1D1;
+    background: #9013FE;
+    font-size: 2rem;
+    padding: 1.2rem 2.8rem;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    text-transform: uppercase;
+
+    &:hover {
+      background: ${ props => darken(0.1, props.theme.violet) };
+    }
+  }
 `
 
 const OpponentName = styled.p`
@@ -102,6 +127,16 @@ const Versus = styled.div`
   letter-spacing: 0;
   line-height: 1;
   text-transform: uppercase;
+  margin: 0 2rem;
+`
+
+const OpponentScore = styled('h3')<{ isWinner: boolean }>`
+  font-family: 'Futura-CondensedMedium', sans-serif;
+  color: ${ props => props.isWinner ? '#9013FE' : '#525252' };
+  font-size: 2rem;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: uppercase;
 `
 
 class Table extends React.Component<TableProps, TableStates> {
@@ -142,19 +177,30 @@ class Table extends React.Component<TableProps, TableStates> {
                   </div>
                 </Opponent>
                 <Score>
+                  <OpponentScore isWinner={ match.winner_id === match.opponents[0].opponent.id }>
+                    { match.results.find(result => result.team_id === match.opponents[0].opponent.id).score }
+                  </OpponentScore>
                   <Versus>
                     VS
                   </Versus>
+                  <OpponentScore isWinner={ match.winner_id === match.opponents[1].opponent.id }>
+                    { match.results.find(result => result.team_id === match.opponents[1].opponent.id).score }
+                  </OpponentScore>
                 </Score>
                 <Opponent variant="space-between">
-                  <div className="Table__Opponent-wrapper">
+                  <td className="Table__Opponent-wrapper">
                     <tr>
                       <OpponentName>{ match.opponents[1].opponent.name }</OpponentName>
                     </tr>
                     <tr>
                       <OpponentAcronym>{ match.opponents[1].opponent.acronym }</OpponentAcronym>
                     </tr>
-                  </div>
+                  </td>
+                  <td className="Table__DetailsButton-wrapper">
+                    <Link href={ `/match?id=${ match.id }` }>
+                      <a className="Table__DetailsButton-link">details</a>
+                    </Link>
+                  </td>
                 </Opponent>
               </TableRow>
             ))

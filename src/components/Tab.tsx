@@ -1,11 +1,10 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { FlexInline, FlexRowAlignCentered } from '@components/styles/FlexMixins'
 
 const StyleTab = styled.li`
-  ${ FlexInline };
-  width: ${props => props.theme.gridColumnWidth};
-  margin-right: ${props => props.theme.gridGutterWidth};
+  display: inline-flex;
+  width: 230px;
+  margin-right: 20px;
 
   &:last-of-type {
     margin-right: 0;
@@ -13,7 +12,10 @@ const StyleTab = styled.li`
 `
 
 const Label = styled('button')<{ isActive: boolean }>`
-  ${ FlexRowAlignCentered }
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
   font-family: 'Futura-CondensedMedium', sans-serif;
   color: ${props => props.isActive ? props.theme.white : props.theme.mediumGrey};
   font-size: 2.4rem;
@@ -33,23 +35,23 @@ const Label = styled('button')<{ isActive: boolean }>`
 
 class Tab extends React.Component<TabProps, TabStates> {
   public onClick = () => {
-    const { onClick, label, activeTabIndex } = this.props
+    const { onClick, index, slug } = this.props
 
-    return onClick(label, activeTabIndex)
+    return onClick(index, slug)
   }
 
   public render() {
-    const { onClick, props: { activeTab, label } } = this
+    const { onClick, props: { label, activeTab, index } } = this
 
     let icon: JSX.Element
 
-    if (activeTab === label) {
+    if (activeTab === index) {
       icon = <img className="Tab__Label-icon" src="/static/worlds-icon.svg" alt="League of Legends Worlds icon" />
     }
 
     return (
-      <StyleTab onClick={ onClick }>
-        <Label isActive={ activeTab === label }>
+      <StyleTab className="tab" onClick={ onClick }>
+        <Label isActive={ activeTab === index }>
           { icon }
           { label }
         </Label>
@@ -61,10 +63,11 @@ class Tab extends React.Component<TabProps, TabStates> {
 export default Tab
 
 interface TabProps {
-  activeTab: string
-  activeTabIndex: number
+  activeTab: number
+  index: number
   label: string
   onClick: any
+  slug: string
 }
 
 interface TabStates {}

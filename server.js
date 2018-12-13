@@ -47,9 +47,8 @@ app.prepare()
     skip: (req, res) => res.statusCode < 400,
   }))
 
-  // Dynamic routing
   server.get('/stage/:slug', (req, res) => {
-    const actualPage = '/stage'
+    const actualPage = '/'
 
     const queryParams = {
       slug: req.params.slug,

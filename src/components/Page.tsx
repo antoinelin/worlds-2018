@@ -153,11 +153,11 @@ const StylePage = styled.div`
   ${ FlexColumnAlignLeft }
   width: 100vw;
   margin: 10rem 0;
-  color: ${props => props.theme.white};
+  color: ${ props => props.theme.white };
 `
 
 const Inner = styled.div`
-  max-width: ${props => props.theme.gridWidth};
+  max-width: ${ props => props.theme.gridWidth };
   margin: 0 auto;
   padding: 0 1rem;
 `
