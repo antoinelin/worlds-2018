@@ -17,7 +17,7 @@ const Label = styled('button')<{ isActive: boolean }>`
   justify-content: flex-start;
   align-items: center;
   font-family: 'Futura-CondensedMedium', sans-serif;
-  color: ${props => props.isActive ? props.theme.white : props.theme.mediumGrey};
+  color: ${ props => props.isActive ? '#D1D1D1' : '#525252' };
   font-size: 2.4rem;
   letter-spacing: 0;
   line-height: 1;
@@ -25,6 +25,10 @@ const Label = styled('button')<{ isActive: boolean }>`
   text-decoration: none;
   text-align: left;
   transition: 200ms ease-out;
+
+  &:hover {
+    color: #D1D1D1;
+  }
 
   .Tab__Label-icon {
     width: 2rem;
