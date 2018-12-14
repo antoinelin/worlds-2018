@@ -20,6 +20,14 @@ const axiosInstance = axios.create({
   withCredentials: true,
 })
 
+const logger = winston.createLogger({
+  format: winston.format.json(),
+  level: 'error',
+  transports: [
+    new winston.transports.Console(),
+  ]
+});
+
 app.prepare()
 .then(() => {
   const server = express()
@@ -47,16 +55,6 @@ app.prepare()
     skip: (req, res) => res.statusCode < 400,
   }))
 
-  server.get('/stage/:slug', (req, res) => {
-    const actualPage = '/'
-
-    const queryParams = {
-      slug: req.params.slug,
-    }
-
-    app.render(req, res, actualPage, queryParams)
-  })
-
   // API Routes
   server.get('/api/healthcheck', (req, res) => {
     res.status(404).send('Ok')
@@ -73,7 +71,7 @@ app.prepare()
     }).then(response => {
       res.status(200).send(response.data)
     }).catch(error => {
-      winston.error(error)
+      logger.error(`[Axios Error - /api/tournaments]: ${error}`)
     })
   })
 
@@ -88,7 +86,53 @@ app.prepare()
     }).then(response => {
       res.status(200).send(response.data)
     }).catch(error => {
-      winston.error(error)
+      logger.error(`[Axios Error - /api/matches]: ${error}`)
+    })
+  })
+
+  server.get('/api/match', (req, res) => {
+    const id = req.query.id
+    const token = req.headers.authorization
+
+    axiosInstance.get(`lol/matches?filter[id]=${id}`, {
+      headers: {
+        'Authorization': token
+      }
+    }).then(response => {
+      res.status(200).send(response.data)
+    }).catch(error => {
+      logger.error(`[Axios Error - /api/match]: ${error}`)
+    })
+  })
+
+  server.get('/api/players', (req, res) => {
+    const tournamentId = req.query.tournamentId
+    const teamId = req.query.teamId
+    const token = req.headers.authorization
+
+    axiosInstance.get(`lol/tournaments/${tournamentId}/players?filter[team_id]=${teamId}`, {
+      headers: {
+        'Authorization': token
+      }
+    }).then(response => {
+      res.status(200).send(response.data)
+    }).catch(error => {
+      logger.error(`[Axios Error - /api/players]: ${error}`)
+    })
+  })
+
+  server.get('/api/games', (req, res) => {
+    const id = req.query.id
+    const token = req.headers.authorization
+
+    axiosInstance.get(`lol/matches/${id}/games`, {
+      headers: {
+        'Authorization': token
+      }
+    }).then(response => {
+      res.status(200).send(response.data)
+    }).catch(error => {
+      logger.error(`[Axios Error - /api/games]: ${error}`)
     })
   })
 
