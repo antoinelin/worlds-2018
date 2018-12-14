@@ -1,6 +1,5 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { darken } from 'polished'
 import Link from 'next/link'
 
 const StyledTable = styled.table`
@@ -49,7 +48,7 @@ const Opponent = styled('td')<{ variant: string }>`
   display: flex;
   flex-direction: row;
   align-items: left;
-  justify-content: ${ props => props.variant };
+  justify-content: ${ ({ variant }) => variant };
 
   .Table__Opponent-wrapper {
     width: 50%;
@@ -78,7 +77,7 @@ const Opponent = styled('td')<{ variant: string }>`
     text-transform: uppercase;
 
     &:hover {
-      background: ${ props => darken(0.1, props.theme.violet) };
+      background: #7608DA;
     }
   }
 `
@@ -113,8 +112,8 @@ const Score = styled.td`
 `
 
 const Versus = styled.div`
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 4rem;
+  height: 4rem;
   border-radius: 0.3rem;
   background: #292B2F;
   display: flex;
@@ -132,7 +131,7 @@ const Versus = styled.div`
 
 const OpponentScore = styled('h3')<{ isWinner: boolean }>`
   font-family: 'Futura-CondensedMedium', sans-serif;
-  color: ${ props => props.isWinner ? '#9013FE' : '#525252' };
+  color: ${ ({ isWinner }) => isWinner ? '#9013FE' : '#525252' };
   font-size: 2rem;
   letter-spacing: 0;
   line-height: 1;
@@ -158,14 +157,19 @@ class Table extends React.Component<TableProps, TableStates> {
         <thead>
           <tr>
             <TableHead>
-              <TableTitle className="Styled__Table-title">{ name }</TableTitle>
+              <TableTitle>{ name }</TableTitle>
             </TableHead>
           </tr>
         </thead>
         <TableBody>
           {
-            matches.map(match => (
-              <TableRow key={ match.id }>
+            matches.map(match => {
+              match.opponents.sort((a, b) => {
+                return a.opponent.id - b.opponent.id
+              })
+
+              return (
+                <TableRow key={ match.id }>
                 <Opponent variant="flex-end">
                   <div className="Table__Opponent-wrapper">
                     <tr>
@@ -203,7 +207,8 @@ class Table extends React.Component<TableProps, TableStates> {
                   </td>
                 </Opponent>
               </TableRow>
-            ))
+              )
+            })
           }
         </TableBody>
       </StyledTable>
