@@ -55,7 +55,9 @@ function createClient(initialState?: any) {
     link: ApolloLink.from([ errorLink, requestLink, restLink ]),
     connectToDevTools: process.browser,
     ssrMode: !process.browser,
-    cache: new InMemoryCache().restore(initialState || {}),
+    cache: new InMemoryCache({
+      addTypename: false,
+    }).restore(initialState || {}),
   })
 }
 
