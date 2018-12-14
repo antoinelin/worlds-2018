@@ -88,10 +88,6 @@ const GET_TOURNAMENTS = gql`
 
 class Home extends React.Component<HomeProps, HomeStates> {
   public componentDidMount = () => {
-    if (!this.props.router.query.slug) {
-      this.props.router.push(`/?slug=${ stages[0].slug }`, `/stage/${ stages[0].slug  }`, { shallow: true })
-    }
-
     const timeline = anime.timeline()
     timeline
       .add({
@@ -132,7 +128,7 @@ class Home extends React.Component<HomeProps, HomeStates> {
 
   public onTabClick = (slug: string) => {
     return new Promise(resolve => {
-      this.props.router.push(`/?slug=${ slug }`, `/stage/${ slug }`, { shallow: true })
+      this.props.router.push(`/?slug=${ slug }`)
 
       const timeline = anime.timeline({
         complete: () => resolve(),
@@ -207,6 +203,9 @@ export default withRouter(Home)
 
 interface HomeProps {
   router: any
+  query?: {
+    slug: string;
+  }
 }
 
 interface HomeStates {}
