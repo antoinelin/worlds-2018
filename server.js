@@ -106,11 +106,10 @@ app.prepare()
   })
 
   server.get('/api/players', (req, res) => {
-    const tournamentId = req.query.tournamentId
     const teamId = req.query.teamId
     const token = req.headers.authorization
 
-    axiosInstance.get(`lol/tournaments/${tournamentId}/players?filter[team_id]=${teamId}`, {
+    axiosInstance.get(`lol/series/1605/players?filter[team_id]=${teamId}&sort=role`, {
       headers: {
         'Authorization': token
       }

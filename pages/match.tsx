@@ -76,10 +76,7 @@ const GET_MATCH = gql`
           name
           image_url
           acronym
-          players @rest(
-            type: "Players",
-            path: "players?tournamentId={exportVariables.tournament_id}&teamId={exportVariables.opponent_id}"
-          ) {
+          players @rest(type: "Players", path: "players?teamId={exportVariables.opponent_id}") {
             id
             slug
             role
