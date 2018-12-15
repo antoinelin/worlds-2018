@@ -11,18 +11,18 @@ export const FlexRowCentered = css`
   align-items: center;
 `
 
-export const FlexColumnCentered = css`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`
-
 export const FlexRowAlignLeft = css`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
+`
+
+export const FlexRowSpaceBetweenAlignCentered = css`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `
 
 export const FlexRowAlignCentered = css`
@@ -39,11 +39,11 @@ export const FlexRowAlignRight = css`
   align-items: flex-end;
 `
 
-export const FlexRowSpaceBetween = css`
+export const FlexColumnCentered = css`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
-  align-items: space-between;
+  align-items: center;
 `
 
 export const FlexColumnAlignCentered = css`

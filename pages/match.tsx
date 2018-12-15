@@ -4,15 +4,19 @@ import redirect from '@src/lib/redirect'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import Link from 'next/link'
+import anime from 'animejs'
 
 import OrbitSpinner from '@components/OrbitSpinner'
-import Opponent from '@components/Opponent'
-import Games from '@components/Games'
+import Opponent from '@src/components/Opponent/Opponent'
+import Games from '@src/components/Games/Games'
+import Composition from '@src/components/Composition/Composition'
+import { FlexRowCentered, FlexRowSpaceBetweenAlignCentered, FlexRowAlignCentered } from '@components/styles/FlexMixins'
 
 const StyledMatchPage = styled.section`
   width: 100%;
 
   .MatchPage__Link {
+    ${ FlexRowAlignCentered }
     color: ${ props => props.theme.mediumGrey };
     transition: 200ms ease-out;
 
@@ -27,10 +31,7 @@ const NumberOfGames = styled.span`
   height: 4rem;
   border-radius: 0.3rem;
   background: #292B2F;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  ${ FlexRowCentered }
   font-family: 'Futura-CondensedMedium', sans-serif;
   color: ${ props => props.theme.white };
   font-size: 2rem;
@@ -47,10 +48,7 @@ const MatchHero = styled.div`
 
 const Versus = styled.div`
   max-width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  ${ FlexRowSpaceBetweenAlignCentered }
 `
 
 const Divider = styled.span`
@@ -112,12 +110,33 @@ class MatchPage extends React.Component<MatchPageProps, MatchPageStates> {
     return { pageProps }
   }
 
+  public displayGames = () => {
+    return anime({
+      targets: '#MatchPage__Games',
+      duration: 500,
+      easing: 'easeInOutQuart',
+      opacity: [0, 1],
+      translateX: [-10, 0],
+    })
+  }
+
+  public displayComposition = () => {
+    return anime({
+      targets: '#MatchPage__Composition',
+      duration: 500,
+      delay: 200,
+      easing: 'easeInOutQuart',
+      opacity: [0, 1],
+      translateX: [-10, 0],
+    })
+  }
+
   public render() {
     const { query: { id } } = this.props
 
     return (
       <StyledMatchPage>
-        <Link href="/">
+        <Link prefetch href="/">
           <a className="MatchPage__Link">Return to scoreboard</a>
         </Link>
         <Query
@@ -135,12 +154,12 @@ class MatchPage extends React.Component<MatchPageProps, MatchPageStates> {
 
             const match = data.match[0]
 
-            data.match[0].opponents.sort((a, b) => {
+            match.opponents.sort((a, b) => {
               return a.opponent.id - b.opponent.id
             })
 
-            const firstOpponent = data.match[0].opponents[0].opponent
-            const secondOpponent = data.match[0].opponents[1].opponent
+            const firstOpponent = match.opponents[0].opponent
+            const secondOpponent = match.opponents[1].opponent
 
             return (
               <React.Fragment>
@@ -174,9 +193,18 @@ class MatchPage extends React.Component<MatchPageProps, MatchPageStates> {
                     />
                   </Versus>
                 </MatchHero>
-                <Games
-                  games={ match.games }
-                />
+                <div id="MatchPage__Games">
+                  <Games
+                    games={ match.games }
+                    onMount={ () => this.displayGames() }
+                  />
+                </div>
+                <div id="MatchPage__Composition">
+                  <Composition
+                    opponents={ match.opponents }
+                    onMount={ () => this.displayComposition() }
+                  />
+                </div>
               </React.Fragment>
             )
           }}

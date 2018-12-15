@@ -1,7 +1,6 @@
-import * as React from 'react'
 import styled from 'styled-components'
 
-const StyledOpponent = styled('div')<{ reverse?: boolean }>`
+export const StyledOpponent = styled('div')<{ reverse?: boolean }>`
   position: relative;
   margin: 10rem 0;
   width: 45%;
@@ -22,7 +21,7 @@ const StyledOpponent = styled('div')<{ reverse?: boolean }>`
   }
 `
 
-const OpponentPosition = styled('small')<{ isWinner: boolean }>`
+export const OpponentPosition = styled('small')<{ isWinner: boolean }>`
   font-family: 'Futura-CondensedMedium', sans-serif;
   color: ${ ({ isWinner }) => isWinner ? '#50E360' : '#F6344C' };
   font-size: 1.4rem;
@@ -33,7 +32,7 @@ const OpponentPosition = styled('small')<{ isWinner: boolean }>`
   text-align: left;
 `
 
-const OpponentName = styled.h3`
+export const OpponentName = styled.h3`
   font-family: 'Futura-CondensedMedium', sans-serif;
   font-size: 4rem;
   letter-spacing: 0;
@@ -43,7 +42,7 @@ const OpponentName = styled.h3`
   margin: 0;
 `
 
-const OpponentLogo = styled('img')<{ isBackground?: boolean; reverse?: boolean }>`
+export const OpponentLogo = styled('img')<{ isBackground?: boolean; reverse?: boolean }>`
   width: 10rem;
   margin: 0 5rem;
 
@@ -53,6 +52,7 @@ const OpponentLogo = styled('img')<{ isBackground?: boolean; reverse?: boolean }
     margin: 0;
     width: 35rem;
     opacity: 0.15;
+    user-select: none;
   `}
 
   ${ ({ isBackground, reverse }) => isBackground && reverse && `
@@ -66,7 +66,7 @@ const OpponentLogo = styled('img')<{ isBackground?: boolean; reverse?: boolean }
   `}
 `
 
-const OpponentResult = styled('h2')<{ isWinner: boolean }>`
+export const OpponentResult = styled('h2')<{ isWinner: boolean }>`
   font-family: 'Futura-CondensedMedium', sans-serif;
   font-size: 10rem;
   letter-spacing: 0;
@@ -76,38 +76,3 @@ const OpponentResult = styled('h2')<{ isWinner: boolean }>`
   margin: 2rem 0;
   color: ${ ({ isWinner }) => isWinner ? '#9013FE' : '#525252' }
 `
-
-const Opponent: React.SFC<OpponentProps> = props => {
-  const { reverse, result: { score, isWinner }, opponent: { name, image_url } } = props
-
-  return (
-    <StyledOpponent reverse={ reverse }>
-      <OpponentLogo isBackground reverse={ reverse } src={ image_url } alt={`${ name } logotype`} />
-      <div className="Opponent__Col1">
-        <OpponentPosition isWinner={ isWinner }>
-          { isWinner ? 'Victory' : 'Defeat' }
-        </OpponentPosition>
-        <OpponentName>{ name }</OpponentName>
-      </div>
-      <div className="Opponent__Col2">
-        <OpponentLogo src={ image_url } alt={`${ name } logotype`} />
-        <OpponentResult isWinner={ isWinner }>{ score }</OpponentResult>
-      </div>
-    </StyledOpponent>
-  )
-}
-
-export default Opponent
-
-interface OpponentProps {
-  reverse?: boolean
-  result: {
-    score: number;
-    isWinner: boolean;
-  }
-  opponent: {
-    id: number;
-    name: string;
-    image_url: string;
-  }
-}

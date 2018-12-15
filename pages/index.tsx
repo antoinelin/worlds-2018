@@ -5,8 +5,8 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import anime from 'animejs'
 
-import Tabs from '@components/Tabs'
-import Tournament from '@src/components/Tournament'
+import Tabs from '@src/components/Tabs/Tabs'
+import Tournament from '@src/components/Tournament/Tournament'
 import OrbitSpinner from '@components/OrbitSpinner'
 
 const StyledHomepage = styled.section`
@@ -149,7 +149,7 @@ class Home extends React.Component<HomeProps, HomeStates> {
     const { props: { router } } = this
     return (
       <StyledHomepage>
-        <StyledTitle id="Homepage__Title">Worlds 2018 scoreboard</StyledTitle>
+        <StyledTitle id="Homepage__Title">League of Legends Worlds 2018 scoreboard</StyledTitle>
         <Tabs
           activeTabIndex={ router.query.slug ? stages.find(stage => stage.slug === router.query.slug ).id : undefined }
           activeTabSlug={ router.query.slug ? router.query.slug : undefined }

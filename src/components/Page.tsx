@@ -45,6 +45,10 @@ const GlobalStyle = createGlobalStyle`
   html {
     box-sizing: border-box;
     font-size: 10px;
+
+    @media (max-width: 1000px) {
+      font-size: 8px;
+    }
   }
 
   *, *:before, *:after {
@@ -161,6 +165,10 @@ const Inner = styled.div`
   width: 100%;
   margin: 0 auto;
   padding: 0 1rem;
+
+  @media (max-width: 1000px) {
+    padding: 0 2rem;
+  }
 `
 
 class Page extends Component {

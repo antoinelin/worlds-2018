@@ -1,42 +1,12 @@
 import * as React from 'react'
-import styled from 'styled-components'
-import Tab from '@components/Tab'
+import Tab from '@src/components/Tabs/Tab'
 
-const StyleTabs = styled.div`
-  width: 100%;
-  padding: 0;
-  margin-top: 4.5rem;
-`
-
-const TabList = styled.ul`
-  width: 100%;
-  padding: 0;
-  list-style: none;
-  display: inline-flex;
-`
-
-const TabsDivider = styled('div')<{ index: number }>`
-  width: 100%;
-  margin: 2rem 0;
-
-  .Tabs__Divider-slider {
-    width: 230px;
-    height: 0.2rem;
-    background: #9013FE;
-    transform: translateX(${props => props.index ? props.index * 250 : 0 }px);
-    transition: 200ms ease-out;
-  }
-
-  .Tabs__Divider-background {
-    width: 100%;
-    height: 0.1rem;
-    background: #292B2F;
-  }
-`
-
-const TabContent = styled.div`
-  width: 100%;
-`
+import {
+  StyleTabs,
+  TabList,
+  TabsDivider,
+  TabContent,
+} from './StyledTabs'
 
 class Tabs extends React.Component<TabsProps, TabsStates> {
   static displayName = 'Tabs'
