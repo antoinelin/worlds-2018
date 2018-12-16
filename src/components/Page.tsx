@@ -158,6 +158,14 @@ const StylePage = styled.div`
   width: 100vw;
   margin: 10rem 0;
   color: ${ props => props.theme.white };
+
+  @media (max-width: 1000px) {
+    margin: 8rem 0;
+  }
+
+  @media (max-width: 640px) {
+    margin: 4.5rem 0;
+  }
 `
 
 const Inner = styled.div`
@@ -167,7 +175,7 @@ const Inner = styled.div`
   padding: 0 1rem;
 
   @media (max-width: 1000px) {
-    padding: 0 2rem;
+    padding: 0 3rem;
   }
 `
 

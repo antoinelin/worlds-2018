@@ -10,7 +10,13 @@ import OrbitSpinner from '@components/OrbitSpinner'
 import Opponent from '@src/components/Opponent/Opponent'
 import Games from '@src/components/Games/Games'
 import Composition from '@src/components/Composition/Composition'
-import { FlexRowCentered, FlexRowSpaceBetweenAlignCentered, FlexRowAlignCentered } from '@components/styles/FlexMixins'
+
+import {
+  FlexRowCentered,
+  FlexRowSpaceBetweenAlignCentered,
+  FlexRowAlignCentered,
+  FlexColumnCentered,
+} from '@components/styles/FlexMixins'
 
 const StyledMatchPage = styled.section`
   width: 100%;
@@ -44,11 +50,19 @@ const NumberOfGames = styled.span`
 const MatchHero = styled.div`
   width: 100%;
   margin: 8rem 0;
+
+  @media (max-width: 640px) {
+    margin: 8rem 0 0 0;
+  }
 `
 
 const Versus = styled.div`
   max-width: 100%;
   ${ FlexRowSpaceBetweenAlignCentered }
+
+  @media (max-width: 640px) {
+    ${ FlexColumnCentered }
+  }
 `
 
 const Divider = styled.span`
@@ -56,6 +70,12 @@ const Divider = styled.span`
   height: 20rem;
   width: 0.2rem;
   transform: rotate(30deg);
+
+  @media (max-width: 640px) {
+    height: 2px;
+    width: 50%;
+    transform: rotate(0deg);
+  }
 `
 
 const GET_MATCH = gql`

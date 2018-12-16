@@ -14,6 +14,10 @@ export const Opponent = styled('td')<{ reverse?: boolean }>`
     justify-content: center;
     align-items: ${ ({ reverse }) => reverse ? 'flex-end' : 'flex-start' };
   }
+
+  ${ ({ reverse }) => reverse && `
+    text-align: right;
+  `}
 `
 
 export const OpponentPosition = styled('p')<{ isWinner: boolean }>`
@@ -21,7 +25,7 @@ export const OpponentPosition = styled('p')<{ isWinner: boolean }>`
   font-size: 1.6rem;
   letter-spacing: 0;
   line-height: 1;
-  margin: 0.5rem 0;
+  margin: 0 0 0.5rem 0;
   color: ${ ({ isWinner }) => isWinner ? '#50E360' : '#F6344C' };
 `
 
@@ -30,6 +34,10 @@ export const OpponentStats = styled.span`
   font-size: 1.4rem;
   letter-spacing: 0;
   line-height: 1;
+
+  @media (max-width: 640px) {
+    font-size: 1.2rem;
+  }
 `
 
 export const GameNumber = styled.div`
@@ -48,4 +56,8 @@ export const GameNumber = styled.div`
   line-height: 1;
   text-transform: uppercase;
   margin: 0 4rem;
+
+  @media (max-width: 640px) {
+    margin: 0 2rem;
+  }
 `

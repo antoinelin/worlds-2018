@@ -11,6 +11,10 @@ export const StyledOpponent = styled('div')<{ reverse?: boolean }>`
 
   .Opponent__Col1 {
     max-width: 230px;
+
+    @media (max-width: 640px) {
+      max-width: unset;
+    }
   }
 
   .Opponent__Col2 {
@@ -19,12 +23,20 @@ export const StyledOpponent = styled('div')<{ reverse?: boolean }>`
     justify-content: flex-start;
     align-items: center;
   }
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    margin: 5rem 0;
+  }
 `
 
 export const OpponentPosition = styled('small')<{ isWinner: boolean }>`
   font-family: 'Futura-CondensedMedium', sans-serif;
   color: ${ ({ isWinner }) => isWinner ? '#50E360' : '#F6344C' };
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   letter-spacing: 0;
   line-height: 1;
   text-transform: uppercase;
@@ -40,6 +52,10 @@ export const OpponentName = styled.h3`
   text-transform: uppercase;
   text-align: left;
   margin: 0;
+
+  @media (max-width: 640px) {
+    text-align: center;
+  }
 `
 
 export const OpponentLogo = styled('img')<{ isBackground?: boolean; reverse?: boolean }>`

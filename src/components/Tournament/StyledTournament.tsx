@@ -13,6 +13,14 @@ export const Opponent = styled('td')<{ variant: string }>`
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+
+    @media (max-width: 1000px) {
+      width: 80%;
+    }
+
+    @media (max-width: 640px) {
+      width: 90%;
+    }
   }
 
   .Table__DetailsButton-wrapper {
@@ -46,7 +54,7 @@ export const OpponentName = styled.p`
   letter-spacing: 0;
   line-height: 1;
   text-align: left;
-  margin: 0.5rem 0;
+  margin: 0 0 0.5rem 0;
 `
 
 export const OpponentAcronym = styled.small`
@@ -66,6 +74,10 @@ export const Score = styled.td`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 640px) {
+    width: 40%;
+  }
 `
 
 export const Versus = styled.div`
@@ -73,6 +85,24 @@ export const Versus = styled.div`
   height: 4rem;
   border-radius: 0.3rem;
   background: #292B2F;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Futura-CondensedMedium', sans-serif;
+  color: #D1D1D1;
+  font-size: 2rem;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: uppercase;
+  margin: 0 2rem;
+`
+
+export const Play = styled.div`
+  width: 5rem;
+  height: 5rem;
+  border-radius: 0.3rem;
+  background: #9013FE;
   display: flex;
   flex-direction: row;
   justify-content: center;

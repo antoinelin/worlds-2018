@@ -1,5 +1,22 @@
 import styled from 'styled-components'
 
+export const OpponentLogo = styled.img`
+  width: 5rem;
+  height: auto;
+  margin: 2rem 0;
+`
+
+export const OpponentName = styled.p`
+  font-family: 'Futura-CondensedMedium', sans-serif;
+  text-transform: uppercase;
+  color: #D1D1D1;
+  font-size: 2rem;
+  letter-spacing: 0;
+  line-height: 1;
+  text-align: left;
+  margin: 0.5rem 0.8rem;
+`
+
 export const PlayerInfos = styled.div`
   width: 100%;
   display: flex;

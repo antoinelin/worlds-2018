@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 export const StyleTabs = styled.div`
   width: 100%;
-  padding: 0;
   margin-top: 4.5rem;
 `
 
@@ -19,15 +18,20 @@ export const TabsDivider = styled('div')<{ index: number }>`
 
   .Tabs__Divider-slider {
     width: 230px;
-    height: 0.2rem;
+    height: 3px;
     background: #9013FE;
-    transform: translateX(${props => props.index ? props.index * 250 : 0 }px);
+    transform: translate(${props => props.index ? props.index * 250 : 0 }px, 1px);
     transition: 200ms ease-out;
+
+    @media (max-width: 1000px) {
+      width: calc((100vw - 6rem) / 4);
+      transform: translate(${props => props.index ? props.index * ((window.innerWidth - 48) / 4) : 0 }px, 1px);
+    }
   }
 
   .Tabs__Divider-background {
     width: 100%;
-    height: 0.1rem;
+    height: 1px;
     background: #292B2F;
   }
 `
@@ -41,6 +45,10 @@ export const StyleTab = styled.li`
   margin-right: 20px;
 
   &:last-of-type {
+    margin-right: 0;
+  }
+
+  @media (max-width: 1000px) {
     margin-right: 0;
   }
 `
@@ -68,5 +76,16 @@ export const Label = styled('button')<{ isActive: boolean }>`
     width: 2rem;
     height: auto;
     margin-right: 1rem;
+
+    @media (max-width: 640px) {
+      display: none;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    font-size: 1.8rem;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
   }
 `

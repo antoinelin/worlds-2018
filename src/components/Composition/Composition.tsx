@@ -1,6 +1,9 @@
 import * as React from 'react'
+import MediaQuery from 'react-responsive'
 
 import {
+  OpponentLogo,
+  OpponentName,
   PlayerInfos,
   PlayerImage,
   PlayerName,
@@ -16,6 +19,7 @@ import {
   TableBody,
   TableRow,
   TableColumn,
+  ColumnHead,
 } from '@components/styles/Table'
 
 class Composition extends React.Component<CompositionProps, CompositionStates> {
@@ -40,10 +44,16 @@ class Composition extends React.Component<CompositionProps, CompositionStates> {
         <TableBody withColumns>
           {
             opponents.map(opponent => {
-              const { id, players } = opponent.opponent
+              const { id, players, image_url, name } = opponent.opponent
 
               return (
                 <TableColumn key={ id }>
+                  <ColumnHead>
+                    <div className="Table__ColumnHead-wrapper">
+                      <OpponentLogo src={ image_url } alt={ `${ name } logotype` } />
+                      <OpponentName>{ name }</OpponentName>
+                    </div>
+                  </ColumnHead>
                   {
                     players.map(player => (
                       <TableRow>

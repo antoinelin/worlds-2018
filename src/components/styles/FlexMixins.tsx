@@ -46,11 +46,18 @@ export const FlexColumnCentered = css`
   align-items: center;
 `
 
-export const FlexColumnAlignCentered = css`
+export const FlexColumnJustifyCentered = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+`
+
+export const FlexColumnAlignCentered = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 `
 
 export const FlexColumnAlignLeft = css`

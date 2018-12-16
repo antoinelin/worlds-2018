@@ -1,4 +1,5 @@
 import * as React from 'react'
+import MediaQuery from 'react-responsive'
 
 import {
   StyledOpponent,
@@ -21,7 +22,9 @@ const Opponent: React.SFC<OpponentProps> = props => {
         <OpponentName>{ name }</OpponentName>
       </div>
       <div className="Opponent__Col2">
-        <OpponentLogo src={ image_url } alt={`${ name } logotype`} />
+        <MediaQuery minWidth={ 640 } value={{ width: 640 }}>
+          <OpponentLogo src={ image_url } alt={`${ name } logotype`} />
+        </MediaQuery>
         <OpponentResult isWinner={ isWinner }>{ score }</OpponentResult>
       </div>
     </StyledOpponent>

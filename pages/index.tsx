@@ -9,11 +9,12 @@ import Tabs from '@src/components/Tabs/Tabs'
 import Tournament from '@src/components/Tournament/Tournament'
 import OrbitSpinner from '@components/OrbitSpinner'
 
-const StyledHomepage = styled.section`
-  width: 100%;
+import { FlexColumnAlignCentered } from '@components/styles/FlexMixins'
 
+const StyledHomepage = styled.section`
   .Homepage__Tournaments-wrapper {
     opacity: 0;
+    margin: 0 auto;
   }
 
   .tab {
@@ -24,10 +25,19 @@ const StyledHomepage = styled.section`
     transform-origin: left;
     transform: scaleX(0);
   }
+
+  @media (max-width: 1000px) {
+    ${ FlexColumnAlignCentered }
+  }
 `
 
 const StyledTitle = styled.h1`
   opacity: 0;
+
+  @media (max-width: 1000px) {
+    font-size: 3rem;
+    text-align: center;
+  }
 `
 
 const stages = [
