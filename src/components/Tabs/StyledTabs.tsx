@@ -25,7 +25,10 @@ export const TabsDivider = styled('div')<{ index: number }>`
 
     @media (max-width: 1000px) {
       width: calc((100vw - 6rem) / 4);
-      transform: translate(${props => props.index ? props.index * ((window.innerWidth - 48) / 4) : 0 }px, 1px);
+      transform: translate(${ props => {
+        return props.index && process.browser ?
+          props.index * ((window.innerWidth - 48) / 4)
+          : 0 } }px, 1px);
     }
   }
 

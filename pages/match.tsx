@@ -78,6 +78,7 @@ const Divider = styled.span`
   }
 `
 
+// Query
 const GET_MATCH = gql`
   query GET_MATCH($id: ID!) {
     match(id: $id) @rest(type: "Match", path: "match?id={args.id}") {

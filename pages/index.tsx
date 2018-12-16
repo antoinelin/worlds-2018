@@ -81,6 +81,7 @@ const stages = [
   },
 ]
 
+// Query
 const GET_TOURNAMENTS = gql`
   query GET_TOURNAMENTS($ids: String) {
     tournaments(ids: $ids) @rest(type: "Tournaments", path: "tournaments?ids={args.ids}") {
@@ -125,6 +126,13 @@ class Home extends React.Component<HomeProps, HomeStates> {
       })
   }
 
+  /**
+   * Tournament tables showing animation
+   * @param id
+   * @param index
+   *
+   * @return void
+   */
   public displayTournament = (id: number, index: number) => {
     return anime({
       targets: `#table-${ id }`,
@@ -136,6 +144,12 @@ class Home extends React.Component<HomeProps, HomeStates> {
     })
   }
 
+  /**
+   * On tab click
+   * @param slug
+   *
+   * @return Promise
+   */
   public onTabClick = (slug: string) => {
     return new Promise(resolve => {
       this.props.router.push(`/?slug=${ slug }`)
