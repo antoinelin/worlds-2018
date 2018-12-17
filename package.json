@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+    "start": "next build && NODE_ENV=production node server.js",
     "type-check": "tsc",
     "lint": "tslint -p . -c tslint.json 'pages/*.{ts,tsx}'"
   },
