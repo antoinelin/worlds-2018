@@ -4,7 +4,7 @@ const path = require('path')
 const Dotenv = require('dotenv-webpack')
 const withTypescript = require('@zeit/next-typescript')
 
-if (process.env.NODE_ENV !== production) {
+if (process.env.NODE_ENV !== 'production') {
   module.exports = withTypescript({
     webpack: (config) => {
       config.plugins = config.plugins || []
