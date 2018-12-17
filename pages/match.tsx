@@ -4,6 +4,7 @@ import redirect from '@src/lib/redirect'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import Link from 'next/link'
+import Head from 'next/head'
 import anime from 'animejs'
 
 import OrbitSpinner from '@components/OrbitSpinner'
@@ -131,6 +132,9 @@ class MatchPage extends React.Component<MatchPageProps, MatchPageStates> {
     return { pageProps }
   }
 
+  /**
+   * Games tables showing animation
+   */
   public displayGames = () => {
     return anime({
       targets: '#MatchPage__Games',
@@ -141,6 +145,9 @@ class MatchPage extends React.Component<MatchPageProps, MatchPageStates> {
     })
   }
 
+  /**
+   * Composition tables showing animation
+   */
   public displayComposition = () => {
     return anime({
       targets: '#MatchPage__Composition',
@@ -184,6 +191,9 @@ class MatchPage extends React.Component<MatchPageProps, MatchPageStates> {
 
             return (
               <React.Fragment>
+                <Head>
+                  <title>{ `${ firstOpponent.acronym } VS ${ secondOpponent.acronym }` } - Worlds 2018</title>
+                </Head>
                 <MatchHero>
                   <NumberOfGames>{ `BO${ match.number_of_games }` }</NumberOfGames>
                   <h3>{ match.begin_at.split('T')[0] }</h3>

@@ -5,7 +5,7 @@ volumes:
     driver: local
 
 services:
-  web-server:
+  node:
     image: mhart/alpine-node:11.4.0
     container_name: node
     ports:
@@ -17,7 +17,7 @@ services:
     restart: unless-stopped
     entrypoint: /usr/src/app/dev.sh
 
-  proxy-dev:
+  proxy:
     image: abiosoft/caddy
     container_name: caddy-dev
     ports:
@@ -27,9 +27,7 @@ services:
       - "${APP}:/usr/src/app:rw"
       - "./caddy/Caddyfile-dev:/etc/Caddyfile:rw"
       - "./caddy/.caddy:/root/.caddy:rw"
-      - "./caddy/ssl/worlds.dev.crt:/etc/caddy/ssl/worlds.dev.crt:ro"
-      - "./caddy/ssl/worlds.dev.key:/etc/caddy/ssl/worlds.dev.key:ro"
       - "caddy_log:/var/log/caddy:rw"
     depends_on:
-      - web-server
+      - node
     restart: unless-stopped

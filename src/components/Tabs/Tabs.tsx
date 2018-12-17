@@ -22,6 +22,14 @@ class Tabs extends React.Component<TabsProps, TabsStates> {
     this.onTabClick = this.onTabClick.bind(this)
   }
 
+  /**
+   * On tab click function
+   *
+   * @param tabIndex
+   * @param tabSlug
+   *
+   * @return void
+   */
   public async onTabClick(tabIndex: number, tabSlug: string) {
     if (typeof this.props.onTabClick !== undefined) {
       this.setState({

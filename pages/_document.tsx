@@ -12,7 +12,7 @@ export default class WorldsScoreboardDocument extends Document<WorldsScoreboardD
 
   render() {
     return (
-      <html>
+      <html lang="en">
         <Head>
           { this.props.styleTags }
         </Head>

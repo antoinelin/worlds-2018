@@ -6,6 +6,11 @@ import {
 } from './StyledTabs'
 
 class Tab extends React.Component<TabProps, TabStates> {
+  /**
+   * On current tab click
+   *
+   * @return void
+   */
   public onClick = () => {
     const { onClick, index, slug } = this.props
 

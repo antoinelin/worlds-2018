@@ -1,8 +1,10 @@
 import App, { Container } from 'next/app'
 import { ApolloProvider } from 'react-apollo'
+import Router from 'next/router'
 
 import withApollo from '@src/lib/withApollo'
 import Page from '@src/components/Page'
+import { initGA, logPageView } from '@src/lib/analytics'
 
 class WorldsScoreboardApp extends App<WorldsScoreboardAppProps> {
   static async getInitialProps({ Component, ctx }: any) {
@@ -14,6 +16,12 @@ class WorldsScoreboardApp extends App<WorldsScoreboardAppProps> {
     // this exposes the query to the user
     pageProps.query = ctx.query
     return { pageProps }
+  }
+
+  componentDidMount () {
+    initGA()
+    logPageView()
+    Router.router.events.on('routeChangeComplete', logPageView)
   }
 
   render() {
