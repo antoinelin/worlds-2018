@@ -42,7 +42,7 @@ function createClient(initialState?: any) {
   })
 
   const restLink = new RestLink({
-    uri: 'http://localhost:3000/api/',
+    uri: process.env.API_URI ? process.env.API_URI : 'http://localhost:3000/api/',
     credentials: 'same-origin',
     headers: {
       'Access-Control-Allow-Origin': '*',
