@@ -2,7 +2,7 @@ import * as React from 'react'
 import Link from 'next/link'
 import MediaQuery from 'react-responsive'
 
-import { Matches } from '@src/@types/app.type'
+import { MatchesType } from '@src/@types/app.type'
 
 import {
   StyledTable,
@@ -124,7 +124,7 @@ interface TournamentProps {
   data: {
     id: number;
     name: string;
-    matches: Matches[];
+    matches: MatchesType[];
   }
 }
 

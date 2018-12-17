@@ -1,7 +1,7 @@
 import * as React from 'react'
 import MediaQuery from 'react-responsive'
 
-import { Game } from '@src/@types/app.type'
+import { GameType } from '@src/@types/app.type'
 
 import {
   StyledTable,
@@ -139,7 +139,7 @@ class Games extends React.Component<GamesProps, GamesStates> {
 export default Games
 
 interface GamesProps {
-  games: Game[]
+  games: GameType[]
   onMount?: any
 }
 

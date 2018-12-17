@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { Opponent } from '@src/@types/app.type'
+import { OpponentType } from '@src/@types/app.type'
 
 import {
   OpponentLogo,
@@ -94,7 +94,7 @@ class Composition extends React.Component<CompositionProps, CompositionStates> {
 export default Composition
 
 interface CompositionProps {
-  opponents: Opponent[]
+  opponents: OpponentType[]
   onMount?: any
 }
 

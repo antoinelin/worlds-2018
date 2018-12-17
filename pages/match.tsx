@@ -12,6 +12,8 @@ import Opponent from '@src/components/Opponent/Opponent'
 import Games from '@src/components/Games/Games'
 import Composition from '@src/components/Composition/Composition'
 
+import { ResultType, OpponentType } from '@src/@types/app.type'
+
 import {
   FlexRowCentered,
   FlexRowSpaceBetweenAlignCentered,
@@ -199,7 +201,7 @@ class MatchPage extends React.Component<MatchPageProps, MatchPageStates> {
 
             const match = data.match[0]
 
-            match.opponents.sort((a, b) => {
+            match.opponents.sort((a: OpponentType, b: OpponentType) => {
               return a.opponent.id - b.opponent.id
             })
 
@@ -217,7 +219,7 @@ class MatchPage extends React.Component<MatchPageProps, MatchPageStates> {
                   <Versus>
                     <Opponent
                       result={{
-                        score: match.results.find(result => result.team_id === firstOpponent.id).score,
+                        score: match.results.find((result: ResultType) => result.team_id === firstOpponent.id).score,
                         isWinner: match.winner.id ===  firstOpponent.id,
                       }}
                       opponent={{
@@ -230,7 +232,7 @@ class MatchPage extends React.Component<MatchPageProps, MatchPageStates> {
                     <Opponent
                       reverse
                       result={{
-                        score: match.results.find(result => result.team_id === secondOpponent.id).score,
+                        score: match.results.find((result: ResultType) => result.team_id === secondOpponent.id).score,
                         isWinner: match.winner.id ===  secondOpponent.id,
                       }}
                       opponent={{

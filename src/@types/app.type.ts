@@ -1,26 +1,26 @@
-export interface Matches {
+export interface MatchesType {
   id: number
-  opponents: Opponent[]
+  opponents: OpponentType[]
   winner_id: number
-  results: Result[]
+  results: ResultType[]
 }
 
-export interface Result {
+export interface ResultType {
   team_id: number
   score: number
 }
 
-export interface Opponent {
+export interface OpponentType {
   opponent: {
     id: number;
     name: string;
     image_url: string;
     acronym: string;
-    players?: Player[];
+    players?: PlayerType[];
   }
 }
 
-export interface Player {
+export interface PlayerType {
   id: number
   role: string
   name: string
@@ -30,32 +30,32 @@ export interface Player {
   hometown: string
 }
 
-export interface Match {
+export interface MatchType {
   id: number
-  winner: Winner
+  winner: WinnerType
   tournament_id: number
   number_of_games: number
   begin_at: string
-  results: Result[]
-  opponents: Opponent[]
+  results: ResultType[]
+  opponents: OpponentType[]
 }
 
-export interface Winner {
+export interface WinnerType {
   id: number
   name: string
   image_url: string
   acronym: string
 }
 
-export interface Game {
+export interface GameType {
   id: number
-  winner: Winner
+  winner: WinnerType
   begin_at: string
-  teams: Team[]
+  teams: TeamType[]
   draw: boolean
 }
 
-export interface Team {
+export interface TeamType {
   id: number
   baron_kills: number
   dragon_kills: number
@@ -64,4 +64,10 @@ export interface Team {
   team: {
     id: number;
   }
+}
+
+export interface TournamentType {
+  id: number
+  name: string
+  matches: MatchesType[]
 }

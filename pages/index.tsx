@@ -11,6 +11,8 @@ import OrbitSpinner from '@components/OrbitSpinner'
 
 import { FlexColumnAlignCentered } from '@components/styles/FlexMixins'
 
+import { TournamentType } from '@src/@types/app.type'
+
 const StyledHomepage = styled.section`
   .Homepage__Tournaments-wrapper {
     opacity: 0;
@@ -122,7 +124,7 @@ class Home extends React.Component<HomeProps, HomeStates> {
       .add({
         targets: '.tab',
         duration: 300,
-        delay: (element, index) => index * 100,
+        delay: (element, index: number) => index * 100,
         easing: 'easeInOutQuart',
         opacity: [0, 1],
         translateX: [-10, 0],
@@ -171,7 +173,7 @@ class Home extends React.Component<HomeProps, HomeStates> {
         .add({
           targets: '.Homepage__Tournaments-wrapper',
           duration: 500,
-          delay:(element, index) => index * 200,
+          delay:(element, index: number) => index * 200,
           easing: 'easeInOutQuart',
           opacity: [1, 0],
           translateX: [0, 10],
@@ -209,7 +211,7 @@ class Home extends React.Component<HomeProps, HomeStates> {
                       return <p>Error: { error.message }</p>
                     }
 
-                    return data.tournaments.map((tournament, index) => (
+                    return data.tournaments.map((tournament: TournamentType, index: number) => (
                       <div
                         key={ tournament.id }
                         className="Homepage__Tournaments-wrapper"
