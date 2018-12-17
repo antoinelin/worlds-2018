@@ -10,8 +10,7 @@ Clone the repository:
 git clone https://github.com/toinelin/worlds-2018.git
 ```
 
-Duplicate .env.sample and rename it .env
-Add you PANDASCORE token on .env
+Duplicate .env.sample and rename it .env then add your PANDASCORE token
 
 Install it and run:
 
