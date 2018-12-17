@@ -19,9 +19,11 @@ class WorldsScoreboardApp extends App<WorldsScoreboardAppProps> {
   }
 
   componentDidMount () {
-    initGA()
-    logPageView()
-    Router.router.events.on('routeChangeComplete', logPageView)
+    if (process.env.GA_TRACKING_ID) {
+      initGA()
+      logPageView()
+      Router.router.events.on('routeChangeComplete', logPageView)
+    }
   }
 
   render() {
