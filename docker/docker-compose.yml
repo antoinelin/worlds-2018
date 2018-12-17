@@ -16,7 +16,7 @@ services:
       PANDASCORE_API_TOKEN: ${PANDASCORE_API_TOKEN}
       GA_TRACKING_ID: ${GA_TRACKING_ID}
     restart: unless-stopped
-    entrypoint: /usr/src/app/dev.sh
+    entrypoint: /usr/src/app/run.sh
 
   proxy:
     image: abiosoft/caddy
