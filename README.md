@@ -22,13 +22,13 @@ yarn start
 ```
 
 ## Stacks
-- [Next.js](https://nextjs.org/)
-- [Apollo Client](https://www.apollographql.com/docs/react/)
-- [GrapQL](https://graphql.org/)
-- [Styled-components](https://www.styled-components.com/)
-- [Typescript](https://www.typescriptlang.org/)
-- [AnimeJS](http://animejs.com/)
-- [Docker](https://www.docker.com/)
+- [Next.js](https://nextjs.org/) - React framework including SSR
+- [Apollo Client](https://www.apollographql.com/docs/react/) - GraphQL Client using [apollo-rest-link](https://github.com/apollographql/apollo-link-rest) for REST connection
+- [GraphQL](https://graphql.org/) - API Query language
+- [Styled-components](https://www.styled-components.com/) - CSS in JS
+- [Typescript](https://www.typescriptlang.org/) - Typing
+- [AnimeJS](http://animejs.com/) - Animation (more lightweight than GSAP)
+- [Docker](https://www.docker.com/) - For production purpose
 
 API from :
 - [PandaScore](https://pandascore.co/)
