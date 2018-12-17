@@ -17,7 +17,7 @@ const handle = app.getRequestHandler()
 const axiosInstance = axios.create({
   baseURL: 'https://api.pandascore.co/',
   timeout: 100000,
-  withCredentials: true,
+  withCredentials: false,
 })
 
 const logger = winston.createLogger({

@@ -17,5 +17,5 @@ Install it and run:
 ```bash
 cd worlds-2018
 yarn
-yarn dev
+yarn start
 ```
