@@ -140,10 +140,10 @@ app.prepare()
     return handle(req, res)
   })
 
-  server.listen(process.env.PORT || 3000, (err) => {
+  server.listen(process.env.PORT, (err) => {
     if (err) { throw err }
     // tslint:disable-next-line
-    console.log(`> Ready on ${process.env.APP_IP}:${process.env.PORT || 3000}`)
+    console.log(`> Ready on ${process.env.APP_IP}:${process.env.PORT}`)
   })
 })
 .catch((ex) => {

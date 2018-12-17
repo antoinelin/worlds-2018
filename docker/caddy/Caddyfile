@@ -16,7 +16,7 @@ worlds2018.fr:443 {
     X-Frame-Options "DENY"
   }
 
-  proxy / node:3000 {
+  proxy / node:8080 {
     transparent
   }
 }

@@ -9,7 +9,7 @@ services:
     image: mhart/alpine-node:11.4.0
     container_name: node
     ports:
-      - ${APP_IP}:3000:3000
+      - ${APP_IP}:8080:8080
     volumes:
       - "./../:/usr/src/app:rw"
     environment:
