@@ -16,6 +16,7 @@ services:
       PANDASCORE_API_TOKEN: ${PANDASCORE_API_TOKEN}
       GA_TRACKING_ID: ${GA_TRACKING_ID}
       API_URI: ${API_URI}
+      APP_IP: ${APP_IP}
     restart: unless-stopped
     entrypoint: /usr/src/app/run.sh
 
