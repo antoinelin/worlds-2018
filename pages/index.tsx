@@ -89,9 +89,19 @@ const GET_TOURNAMENTS = gql`
       name
       matches @rest(type: "Matches", path: "matches?tournamentId={exportVariables.id}") {
         id
-        opponents
+        opponents {
+          opponent {
+            id
+            name
+            image_url
+            acronym
+          }
+        }
         winner_id
-        results
+        results {
+          team_id
+          score
+        }
       }
     }
   }

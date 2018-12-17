@@ -1,5 +1,6 @@
 import * as React from 'react'
-import MediaQuery from 'react-responsive'
+
+import { Opponent } from '@src/@types/app.type'
 
 import {
   OpponentLogo,
@@ -56,7 +57,7 @@ class Composition extends React.Component<CompositionProps, CompositionStates> {
                   </ColumnHead>
                   {
                     players.map(player => (
-                      <TableRow>
+                      <TableRow key={ player.id }>
                         <PlayerImage src={ player.image_url } alt={ `${ player.name } profile picture` } />
                         <PlayerInfos>
                           <tr>
@@ -93,7 +94,7 @@ class Composition extends React.Component<CompositionProps, CompositionStates> {
 export default Composition
 
 interface CompositionProps {
-  opponents: any
+  opponents: Opponent[]
   onMount?: any
 }
 

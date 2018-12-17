@@ -10,7 +10,8 @@ Clone the repository:
 git clone https://github.com/toinelin/worlds-2018.git
 ```
 
-Add you PANDASCORE token on .env file
+Duplicate .env.sample and rename it .env
+Add you PANDASCORE token on .env
 
 Install it and run:
 
@@ -19,3 +20,15 @@ cd worlds-2018
 yarn
 yarn start
 ```
+
+## Stacks
+- [Next.js](https://nextjs.org/)
+- [Apollo Client](https://www.apollographql.com/docs/react/)
+- [GrapQL](https://graphql.org/)
+- [Styled-components](https://www.styled-components.com/)
+- [Typescript](https://www.typescriptlang.org/)
+- [AnimeJS](http://animejs.com/)
+- [Docker](https://www.docker.com/)
+
+API from :
+- [PandaScore](https://pandascore.co/)

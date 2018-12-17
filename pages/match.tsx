@@ -84,7 +84,12 @@ const GET_MATCH = gql`
   query GET_MATCH($id: ID!) {
     match(id: $id) @rest(type: "Match", path: "match?id={args.id}") {
       id
-      winner
+      winner {
+        id
+        name
+        image_url
+        acronym
+      }
       tournament_id @export(as: "tournament_id")
       number_of_games
       begin_at
@@ -92,13 +97,11 @@ const GET_MATCH = gql`
       opponents {
         opponent {
           id  @export(as: "opponent_id")
-          slug
           name
           image_url
           acronym
           players @rest(type: "Players", path: "players?teamId={exportVariables.opponent_id}") {
             id
-            slug
             role
             name
             first_name
@@ -110,9 +113,23 @@ const GET_MATCH = gql`
       }
       games(id: $id) @rest(type: "Games", path: "games?id={args.id}") {
         id
-        winner
+        winner {
+          id
+          name
+          image_url
+          acronym
+        }
         begin_at
-        teams
+        teams {
+          id
+          baron_kills
+          dragon_kills
+          gold_earned
+          tower_kills
+          team {
+            id
+          }
+        }
         draw
       }
     }
@@ -179,6 +196,8 @@ class MatchPage extends React.Component<MatchPageProps, MatchPageStates> {
             if (error) {
               return <p>Error: { error.message }</p>
             }
+
+            console.log(data)
 
             const match = data.match[0]
 
