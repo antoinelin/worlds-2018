@@ -11,12 +11,12 @@ services:
     ports:
       - ${APP_IP}:3000:3000
     volumes:
-      - "../:/usr/src/app:rw"
+      - "./../:/usr/src/app:rw"
     environment:
       PANDASCORE_API_TOKEN: ${PANDASCORE_API_TOKEN}
       GA_TRACKING_ID: ${GA_TRACKING_ID}
-      API_URI: ${API_URI}
       APP_IP: ${APP_IP}
+      APP_PORT: ${APP_PORT}
     restart: unless-stopped
     entrypoint: /usr/src/app/run.sh
 
@@ -27,7 +27,7 @@ services:
       - ${APP_IP}:80:80
       - ${APP_IP}:443:443
     volumes:
-      - "../:/usr/src/app:rw"
+      - "./../:/usr/src/app:rw"
       - "./caddy/Caddyfile:/etc/Caddyfile:rw"
       - "./caddy/.caddy:/root/.caddy:rw"
       - "caddy_log:/var/log/caddy:rw"

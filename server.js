@@ -57,7 +57,7 @@ app.prepare()
 
   // API Routes
   server.get('/api/healthcheck', (req, res) => {
-    res.status(404).send('Ok')
+    res.status(200).send('Ok')
   })
 
   server.get('/api/tournaments', (req, res) => {
@@ -75,11 +75,11 @@ app.prepare()
     })
   })
 
-  server.get('/api/matches', (req, res) => {
+   server.get('/api/matches', (req, res) => {
     const tournamentId = req.query.tournamentId
     const token = req.headers.authorization
 
-    axiosInstance.get(`tournaments/${tournamentId}/matches`, {
+    axiosInstance.get(`tournaments/${ tournamentId }/matches`, {
       headers: {
         'Authorization': token
       }
@@ -140,10 +140,10 @@ app.prepare()
     return handle(req, res)
   })
 
-  server.listen(3000, (err) => {
+  server.listen(process.env.PORT || 3000, (err) => {
     if (err) { throw err }
     // tslint:disable-next-line
-    console.log('> Ready on http://localhost:3000')
+    console.log(`> Ready on ${process.env.APP_IP}:${process.env.PORT || 3000}`)
   })
 })
 .catch((ex) => {
