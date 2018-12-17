@@ -9,7 +9,7 @@ services:
     image: mhart/alpine-node:11.4.0
     container_name: node
     ports:
-      - 127.0.0.1:3000:3000
+      - 3000:3000
     volumes:
       - "../:/usr/src/app:rw"
     environment:
@@ -22,8 +22,8 @@ services:
     image: abiosoft/caddy
     container_name: caddy
     ports:
-      - 127.0.0.1:80:80
-      - 127.0.0.1:443:443
+      - 80:80
+      - 443:443
     volumes:
       - "../:/usr/src/app:rw"
       - "./caddy/Caddyfile:/etc/Caddyfile:rw"
