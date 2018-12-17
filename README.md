@@ -1,6 +1,6 @@
 # Worlds 2018
 
-Worlds 2018 score boards
+Worlds 2018 score boards using PandaScore API
 
 ## Getting started
 
@@ -10,7 +10,7 @@ Clone the repository:
 git clone https://github.com/toinelin/worlds-2018.git
 ```
 
-Duplicate .env.sample and rename it .env then add your PANDASCORE token
+Duplicate .env.sample and rename it with .env, then add your PANDASCORE token
 
 Install it and run:
 
