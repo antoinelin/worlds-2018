@@ -1,10 +1,8 @@
-worlds.dev:443 {
+worlds2018.fr:443 {
   bind {$ADDRESS}
 
-  log stdout
-  errors stdout
-
-  tls /etc/caddy/ssl/worlds.dev.crt /etc/caddy/ssl/worlds.dev.key
+  log /var/log/caddy/access.log
+  errors /var/log/caddy/error.log
 
   header / {
     # Enable HTTP Strict Transport Security (HSTS) to force clients to always
@@ -18,11 +16,11 @@ worlds.dev:443 {
     X-Frame-Options "DENY"
   }
 
-  proxy / web-server:3000 {
+  proxy / node:3000 {
     transparent
   }
 }
 
-worlds.dev:80 {
-  redir https://worlds.dev{uri}
+worlds2018.fr:80 {
+  redir https://worlds2018.fr{uri}
 }
