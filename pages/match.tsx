@@ -197,8 +197,6 @@ class MatchPage extends React.Component<MatchPageProps, MatchPageStates> {
               return <p>Error: { error.message }</p>
             }
 
-            console.log(data)
-
             const match = data.match[0]
 
             match.opponents.sort((a, b) => {
